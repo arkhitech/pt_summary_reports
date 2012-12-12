@@ -1,0 +1,8 @@
+default:
+
+
+development:
+  host: localhost:3000
+
+production:
+  host: ptsummaryreports.com
