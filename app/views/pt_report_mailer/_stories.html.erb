@@ -1,0 +1,10 @@
+<div id=stories>
+  <ul>
+    <% stories.each do |story| %>
+    <li id=<%=story.id%>>
+      <%= story.story_type%> #<%= link_to(story.id, story.url) %>: 
+      <%= story.name %>: <%= story.description %>
+    </li>
+    <% end %>
+  </ul>
+</div>

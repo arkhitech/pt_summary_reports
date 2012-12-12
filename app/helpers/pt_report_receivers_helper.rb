@@ -1,0 +1,2 @@
+module PtReportReceiversHelper
+end

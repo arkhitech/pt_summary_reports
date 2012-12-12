@@ -1,0 +1,25 @@
+<%= form_for(@pt_report_schedule) do |f| %>
+  <% if @pt_report_schedule.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@pt_report_schedule.errors.count, "error") %> prohibited this pt_report_schedule from being saved:</h2>
+
+      <ul>
+      <% @pt_report_schedule.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :pt_account %><br />
+    <%= f.text_field :pt_account %>
+  </div>
+  <div class="field">
+    <%= f.label :report_time %><br />
+    <%= f.time_select :report_time %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

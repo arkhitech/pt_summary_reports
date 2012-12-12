@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Pt report schedule:</b>
+  <%= @pt_report_receiver.pt_report_schedule %>
+</p>
+
+<p>
+  <b>Pt membership:</b>
+  <%= @pt_report_receiver.pt_membership_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_pt_report_receiver_path(@pt_report_receiver) %> |
+<%= link_to 'Back', pt_report_receivers_path %>

@@ -1,0 +1,5 @@
+<% stories.each do |story| %>
+# <%= story.story_type%> - <%= story.id %> 
+  <%= story.name %>: <%= story.description %> (<%= story.url %>)
+  
+<% end %>

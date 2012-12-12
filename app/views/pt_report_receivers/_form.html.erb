@@ -1,0 +1,25 @@
+<%= form_for(@pt_report_receiver) do |f| %>
+  <% if @pt_report_receiver.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@pt_report_receiver.errors.count, "error") %> prohibited this pt_report_receiver from being saved:</h2>
+
+      <ul>
+      <% @pt_report_receiver.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :pt_report_schedule %><br />
+    <%= f.text_field :pt_report_schedule %>
+  </div>
+  <div class="field">
+    <%= f.label :pt_membership_id %><br />
+    <%= f.number_field :pt_membership_id %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

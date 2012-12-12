@@ -1,0 +1,2 @@
+module PtAccountsHelper
+end

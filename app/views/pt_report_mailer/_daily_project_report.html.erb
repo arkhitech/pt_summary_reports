@@ -1,0 +1,19 @@
+<div id=project-<%= daily_project_report[:project].id%>> 
+  <h2><%= daily_project_report[:project].name%></h2>
+  <div id=started_stories>
+    <h3>Stories Started</h3>
+    <%= render :partial => 'stories', :object => daily_project_report[:started_stories]%>
+  </div>
+  <div id=finished_stories>
+    <h3>Stories Finished</h3>
+    <%= render :partial => 'stories', :object => daily_project_report[:finished_stories]%>
+  </div>
+  <div id=delivered_stories>
+    <h3>Stories Delivered</h3>
+    <%= render :partial => 'stories', :object => daily_project_report[:delivered_stories]%>
+  </div>
+  <div id=modified_stories>
+    <h3>Other Stories Modified</h3>
+    <%= render :partial => 'stories', :object => daily_project_report[:modified_stories]%>
+  </div>
+</div>

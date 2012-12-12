@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Email:</b>
+  <%= @pt_account.email %>
+</p>
+
+<p>
+  <b>Password digest:</b>
+  <%= @pt_account.password_digest %>
+</p>
+
+<p>
+  <b>Api token:</b>
+  <%= @pt_account.api_token %>
+</p>
+
+<p>
+  <b>User:</b>
+  <%= @pt_account.user %>
+</p>
+
+
+<%= link_to 'Edit', edit_pt_account_path(@pt_account) %> |
+<%= link_to 'Back', pt_accounts_path %>

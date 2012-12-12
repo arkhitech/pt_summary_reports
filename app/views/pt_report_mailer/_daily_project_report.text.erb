@@ -1,0 +1,10 @@
+<%= daily_project_report[:project].name%>
+-----------------------------------------
+Stories Started:
+<%= render :partial => 'stories', :object => daily_project_report[:started_stories]%>
+Stories Finished:
+<%= render :partial => 'stories', :object => daily_project_report[:finished_stories]%>
+Stories Delivered:
+<%= render :partial => 'stories', :object => daily_project_report[:delivered_stories]%>
+Other Stories Modified:
+<%= render :partial => 'stories', :object => daily_project_report[:modified_stories]%>

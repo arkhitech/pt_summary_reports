@@ -1,0 +1,25 @@
+<h1>Listing pt_report_receivers</h1>
+
+<table>
+  <tr>
+    <th>Pt report schedule</th>
+    <th>Pt membership</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @pt_report_receivers.each do |pt_report_receiver| %>
+  <tr>
+    <td><%= pt_report_receiver.pt_report_schedule %></td>
+    <td><%= pt_report_receiver.pt_membership_id %></td>
+    <td><%= link_to 'Show', pt_report_receiver %></td>
+    <td><%= link_to 'Edit', edit_pt_report_receiver_path(pt_report_receiver) %></td>
+    <td><%= link_to 'Destroy', pt_report_receiver, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Pt report receiver', new_pt_report_receiver_path %>
