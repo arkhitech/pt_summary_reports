@@ -1,11 +1,8 @@
-<h1>Listing pt_accounts</h1>
-
+<h1>PivotalTracker Accounts</h1>
+<%unless @pt_accounts.empty?%>
 <table>
   <tr>
     <th>Email</th>
-    <th>Password digest</th>
-    <th>Api token</th>
-    <th>User</th>
     <th></th>
     <th></th>
     <th></th>
@@ -14,9 +11,6 @@
 <% @pt_accounts.each do |pt_account| %>
   <tr>
     <td><%= pt_account.email %></td>
-    <td><%= pt_account.password_digest %></td>
-    <td><%= pt_account.api_token %></td>
-    <td><%= pt_account.user %></td>
     <td><%= link_to 'Show', pt_account %></td>
     <td><%= link_to 'Edit', edit_pt_account_path(pt_account) %></td>
     <td><%= link_to 'Destroy', pt_account, method: :delete, data: { confirm: 'Are you sure?' } %></td>
@@ -25,5 +19,5 @@
 </table>
 
 <br />
-
-<%= link_to 'New Pt account', new_pt_account_path %>
+<% end %>
+<%= link_to 'New Account', new_user_pt_account_path(current_user) %>

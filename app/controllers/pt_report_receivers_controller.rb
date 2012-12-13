@@ -1,4 +1,5 @@
 class PtReportReceiversController < ApplicationController
+  before_filter :authenticate_user!
   # GET /pt_report_receivers
   # GET /pt_report_receivers.json
   def index

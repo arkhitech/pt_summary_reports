@@ -11,7 +11,36 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121212100209) do
+ActiveRecord::Schema.define(:version => 20121212120237) do
+
+  create_table "pt_accounts", :force => true do |t|
+    t.string   "email"
+    t.string   "password_digest"
+    t.string   "api_token"
+    t.integer  "user_id"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+  end
+
+  add_index "pt_accounts", ["user_id"], :name => "index_pt_accounts_on_user_id"
+
+  create_table "pt_report_receivers", :force => true do |t|
+    t.integer  "pt_report_schedule_id"
+    t.integer  "pt_membership_id"
+    t.datetime "created_at",            :null => false
+    t.datetime "updated_at",            :null => false
+  end
+
+  add_index "pt_report_receivers", ["pt_report_schedule_id"], :name => "index_pt_report_receivers_on_pt_report_schedule_id"
+
+  create_table "pt_report_schedules", :force => true do |t|
+    t.integer  "pt_account_id"
+    t.time     "report_time"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+
+  add_index "pt_report_schedules", ["pt_account_id"], :name => "index_pt_report_schedules_on_pt_account_id"
 
   create_table "users", :force => true do |t|
     t.string   "email",                  :default => "", :null => false

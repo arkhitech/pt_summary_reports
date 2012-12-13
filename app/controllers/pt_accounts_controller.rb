@@ -1,8 +1,9 @@
 class PtAccountsController < ApplicationController
-  # GET /pt_accounts
-  # GET /pt_accounts.json
+  before_filter :authenticate_user!
+  # GET /users/1/pt_accounts
+  # GET /users/1/pt_accounts.json
   def index
-    @pt_accounts = PtAccount.all
+    @pt_accounts = current_user.pt_accounts.all
 
     respond_to do |format|
       format.html # index.html.erb
@@ -10,10 +11,10 @@ class PtAccountsController < ApplicationController
     end
   end
 
-  # GET /pt_accounts/1
-  # GET /pt_accounts/1.json
+  # GET /users/1/pt_accounts/1
+  # GET /users/1/pt_accounts/1.json
   def show
-    @pt_account = PtAccount.find(params[:id])
+    @pt_account = current_user.pt_accounts.find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -21,10 +22,10 @@ class PtAccountsController < ApplicationController
     end
   end
 
-  # GET /pt_accounts/new
-  # GET /pt_accounts/new.json
+  # GET /users/1/pt_accounts/new
+  # GET /users/1/pt_accounts/new.json
   def new
-    @pt_account = PtAccount.new
+    @pt_account = current_user.pt_accounts.build
 
     respond_to do |format|
       format.html # new.html.erb
@@ -32,20 +33,20 @@ class PtAccountsController < ApplicationController
     end
   end
 
-  # GET /pt_accounts/1/edit
+  # GET /users/1/pt_accounts/1/edit
   def edit
-    @pt_account = PtAccount.find(params[:id])
+    @pt_account = current_user.pt_accounts.find(params[:id])
   end
 
-  # POST /pt_accounts
-  # POST /pt_accounts.json
+  # POST /users/1/pt_accounts
+  # POST /users/1/pt_accounts.json
   def create
-    @pt_account = PtAccount.new(params[:pt_account])
+    @pt_account = current_user.pt_accounts.build(params[:pt_account])
 
     respond_to do |format|
       if @pt_account.save
-        format.html { redirect_to @pt_account, notice: 'Pt account was successfully created.' }
-        format.json { render json: @pt_account, status: :created, location: @pt_account }
+        format.html { redirect_to [@pt_account.user, @pt_account], notice: 'Account was successfully created.' }
+        format.json { render json: [@pt_account.user, @pt_account], status: :created, location: @pt_account }
       else
         format.html { render action: "new" }
         format.json { render json: @pt_account.errors, status: :unprocessable_entity }
@@ -53,14 +54,14 @@ class PtAccountsController < ApplicationController
     end
   end
 
-  # PUT /pt_accounts/1
-  # PUT /pt_accounts/1.json
+  # PUT /users/1/pt_accounts/1
+  # PUT /users/1/pt_accounts/1.json
   def update
-    @pt_account = PtAccount.find(params[:id])
+    @pt_account = current_user.pt_accounts.find(params[:id])
 
     respond_to do |format|
       if @pt_account.update_attributes(params[:pt_account])
-        format.html { redirect_to @pt_account, notice: 'Pt account was successfully updated.' }
+        format.html { redirect_to [@pt_account.user, @pt_account], notice: 'Account was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -72,7 +73,7 @@ class PtAccountsController < ApplicationController
   # DELETE /pt_accounts/1
   # DELETE /pt_accounts/1.json
   def destroy
-    @pt_account = PtAccount.find(params[:id])
+    @pt_account = current_user.pt_accounts.find(params[:id])
     @pt_account.destroy
 
     respond_to do |format|

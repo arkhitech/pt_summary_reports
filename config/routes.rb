@@ -1,13 +1,19 @@
 PtSummaryReports::Application.routes.draw do
   get "home/index"
 
-  resources :pt_report_receivers
+  resources :pt_report_schedules, only: :index do
+    resources :pt_report_receivers    
+  end
+
+  resources :pt_accounts, only: :index do
+    resources :pt_report_schedules, except: [:index, :show, :new]
+  end
+
+  resources :users, only: :index do
+    resources :pt_accounts
+  end
 
 
-  resources :pt_report_schedules
-
-
-  resources :pt_accounts
 
 
   devise_for :users

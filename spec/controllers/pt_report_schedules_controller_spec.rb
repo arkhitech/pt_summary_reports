@@ -34,29 +34,6 @@ describe PtReportSchedulesController do
     {}
   end
 
-  describe "GET index" do
-    it "assigns all pt_report_schedules as @pt_report_schedules" do
-      pt_report_schedule = PtReportSchedule.create! valid_attributes
-      get :index, {}, valid_session
-      assigns(:pt_report_schedules).should eq([pt_report_schedule])
-    end
-  end
-
-  describe "GET show" do
-    it "assigns the requested pt_report_schedule as @pt_report_schedule" do
-      pt_report_schedule = PtReportSchedule.create! valid_attributes
-      get :show, {:id => pt_report_schedule.to_param}, valid_session
-      assigns(:pt_report_schedule).should eq(pt_report_schedule)
-    end
-  end
-
-  describe "GET new" do
-    it "assigns a new pt_report_schedule as @pt_report_schedule" do
-      get :new, {}, valid_session
-      assigns(:pt_report_schedule).should be_a_new(PtReportSchedule)
-    end
-  end
-
   describe "GET edit" do
     it "assigns the requested pt_report_schedule as @pt_report_schedule" do
       pt_report_schedule = PtReportSchedule.create! valid_attributes

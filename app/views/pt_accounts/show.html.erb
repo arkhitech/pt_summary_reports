@@ -5,21 +5,13 @@
   <%= @pt_account.email %>
 </p>
 
-<p>
-  <b>Password digest:</b>
-  <%= @pt_account.password_digest %>
-</p>
-
-<p>
-  <b>Api token:</b>
-  <%= @pt_account.api_token %>
-</p>
-
-<p>
-  <b>User:</b>
-  <%= @pt_account.user %>
-</p>
-
+<h2>Report Schedule</h2>                                                                                                                                           
+<div id="pt_report_schedule">                                                                                                                                         
+  <%= render :partial => "pt_report_schedules/pt_report_schedule", :collection => @pt_account.pt_report_schedules %>  
+</div>                                                                                                                                                      
+<div id="pt_report_schedule-notice"></div>                                                                                                                             
+<h2>Add a schedule:</h2>                                                                                                                                     
+<%= render "pt_report_schedules/form" %>  
 
 <%= link_to 'Edit', edit_pt_account_path(@pt_account) %> |
 <%= link_to 'Back', pt_accounts_path %>

@@ -1,0 +1,12 @@
+<div id=pt_report_schedule_<%=@pt_report_schedule.id%>>                                                                                                                            
+  <p>
+    <b>Report time:</b>
+    <%= @pt_report_schedule.report_time %>
+  </p>
+  <p>                                                           
+    <%= link_to 'Edit', [@pt_report_schedule.pt_account, @pt_report_schedule] %> |
+    <%= link_to 'Destroy Schedule', [@pt_report_schedule.pt_account, @pt_report_schedule], 
+      method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </p>                                                                                                                                                        
+</div>   
+
