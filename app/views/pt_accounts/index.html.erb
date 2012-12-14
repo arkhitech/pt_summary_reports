@@ -1,3 +1,4 @@
+<% provide(:title, 'Pivotal Tracker Accounts') %>
 <h1>PivotalTracker Accounts</h1>
 <%unless @pt_accounts.empty?%>
 <table>
@@ -12,8 +13,8 @@
   <tr>
     <td><%= pt_account.email %></td>
     <td><%= link_to 'Show', pt_account %></td>
-    <td><%= link_to 'Edit', edit_pt_account_path(pt_account) %></td>
-    <td><%= link_to 'Destroy', pt_account, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <td><%= link_to 'Edit', edit_user_pt_account_path(pt_account.user, pt_account) %></td>
+    <td><%= link_to 'Destroy', [pt_account.user, pt_account], method: :delete, data: { confirm: 'Are you sure?' } %></td>
   </tr>
 <% end %>
 </table>

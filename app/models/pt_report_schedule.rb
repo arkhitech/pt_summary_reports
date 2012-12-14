@@ -1,8 +1,22 @@
+# == Schema Information
+#
+# Table name: pt_report_schedules
+#
+#  id            :integer          not null, primary key
+#  pt_account_id :integer
+#  report_time   :time
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
+#
+
 class PtReportSchedule < ActiveRecord::Base
   belongs_to :pt_account
-  attr_accessible :report_time
+  attr_accessible :report_time, :pt_report_receivers_attributes
 
-  has_many :pt_report_recievers, dependent: :destroy
+  has_many :pt_report_receivers, dependent: :destroy
+
+  accepts_nested_attributes_for :pt_report_receivers, 
+    reject_if: proc { |attrs| attrs.all? { |k, v| v.blank? } }
 
   class << self
 
@@ -23,6 +37,43 @@ class PtReportSchedule < ActiveRecord::Base
     end    
   end
 
+  def prune_pt_report_receivers(params)
+    receiver_attributes = params[:pt_report_receivers_attributes]
+    
+    if receiver_attributes.nil?
+      #just remove all receivers and exit
+      self.pt_report_receivers.destroy_all
+      return
+    end
+    
+    pt_membership_ids = receiver_attributes.collect {
+      |report_receiver| report_receiver[:pt_membership_id]}
+    
+    #remove pt_membership_ids not included
+    self.pt_report_receivers.
+      select(:pt_membership_id).where('pt_membership_id NOT IN (?)', 
+      pt_membership_ids).destroy_all
+    
+    intersecting_pt_membership_ids = self.pt_report_receivers.
+      select(:pt_membership_id).where(pt_membership_id: pt_membership_ids).
+      collect {|report_receiver| report_receiver.pt_membership_id}
+ 
+    unless intersecting_pt_membership_ids.empty?
+      to_be_added_pt_membership_ids = pt_membership_ids - intersecting_pt_membership_ids
+
+      params[:pt_report_receivers_attributes] = []
+      to_be_added_pt_membership_ids.each do |pt_membership_id|
+        params[:pt_report_receivers_attributes] << {pt_membership_id: pt_membership_id}
+      end
+    end    
+  end
+  private :prune_pt_report_receivers
+  
+  def update_attributes_custom(params)
+    prune_pt_report_receivers(params)
+    update_attributes(params)
+  end
+  
   def send_daily_report
     daily_project_reports = generate_daily_project_reports
     PtReportMailer.daily_report(daily_project_reports).deliver
@@ -38,16 +89,11 @@ class PtReportSchedule < ActiveRecord::Base
     end
     
     init_pt_client
-    memberships = []
-    
-    pt_projects.each do |pt_project|
-      memberships += pt_project.memberships.all
-    end
-    
+    pt_memberships = available_pt_memberships(pt_projects)
     recipients_with_name = []
-    memberships.each do |membership|
-      recipients_with_name << "#{membership.name} <#{
-        membership.email}>" if report_receiver_ids.include?(membership.id)      
+    pt_memberships.each do |pt_membership|
+      recipients_with_name << "#{pt_membership.name} <#{
+        pt_membership.email}>" if report_receiver_ids.include?(pt_membership.id)      
     end
     recipients_with_name
   end
@@ -55,8 +101,9 @@ class PtReportSchedule < ActiveRecord::Base
   
   def init_pt_client
     @init_client ||= begin
-      if pt_account.api_token.empty?
-        PivotalTracker::Client.token(pt_account.email, pt_account.password)
+      if pt_account.api_token.blank?
+        puts "pt_account: #{pt_account.email}, password: #{pt_account.decrypted_password}"
+        PivotalTracker::Client.token(pt_account.email, pt_account.decrypted_password)
       else
         PivotalTracker::Client.token = pt_account.api_token
       end      
@@ -64,6 +111,22 @@ class PtReportSchedule < ActiveRecord::Base
   end
   private :init_pt_client
   
+  def available_pt_memberships(pt_projects = nil)
+    pt_projects ||= begin
+      init_pt_client
+      PivotalTracker::Project.all
+    end
+    pt_memberships = []
+    
+    pt_projects.each do |pt_project|
+      pt_memberships += pt_project.memberships.all
+    end
+    pt_memberships
+  end
+  
+  def pt_report_receiver?(pt_membership)
+    pt_report_receivers.find_by_pt_membership_id(pt_membership.id)
+  end
   # a daily email digest with the stories that were started, finished,
   # delivered and discussed the previous day.
   def generate_daily_project_reports

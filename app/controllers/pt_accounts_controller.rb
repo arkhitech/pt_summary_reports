@@ -15,7 +15,7 @@ class PtAccountsController < ApplicationController
   # GET /users/1/pt_accounts/1.json
   def show
     @pt_account = current_user.pt_accounts.find(params[:id])
-
+    
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @pt_account }
@@ -45,8 +45,10 @@ class PtAccountsController < ApplicationController
 
     respond_to do |format|
       if @pt_account.save
-        format.html { redirect_to [@pt_account.user, @pt_account], notice: 'Account was successfully created.' }
-        format.json { render json: [@pt_account.user, @pt_account], status: :created, location: @pt_account }
+        format.html { redirect_to [@pt_account.user, @pt_account], 
+          notice: 'Account was successfully created.' }
+        format.json { render json: @pt_account, status: :created, 
+          location: [@pt_account.user, @pt_account] }
       else
         format.html { render action: "new" }
         format.json { render json: @pt_account.errors, status: :unprocessable_entity }

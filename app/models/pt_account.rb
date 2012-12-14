@@ -1,3 +1,16 @@
+# == Schema Information
+#
+# Table name: pt_accounts
+#
+#  id              :integer          not null, primary key
+#  email           :string(255)
+#  password_digest :string(255)
+#  api_token       :string(255)
+#  user_id         :integer
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#
+
 class PtAccount < ActiveRecord::Base
   belongs_to :user
   has_many :pt_report_schedules, dependent: :destroy
