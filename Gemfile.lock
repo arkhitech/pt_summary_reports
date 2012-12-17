@@ -203,17 +203,17 @@ PLATFORMS
 
 DEPENDENCIES
   annotate
-  bootstrap-sass
+  bootstrap-sass (= 2.2.1.1)
   capybara
   coffee-rails (~> 3.2.1)
   devise (= 2.1.2)
   factory_girl_rails
   faker
   guard-rspec
-  jquery-rails
+  jquery-rails (= 2.1.4)
   launchy
   pg (= 0.14.1)
-  pivotal-tracker
+  pivotal-tracker (= 0.5.10)
   rails (= 3.2.9)
   rspec-rails
   sass-rails (~> 3.2.3)

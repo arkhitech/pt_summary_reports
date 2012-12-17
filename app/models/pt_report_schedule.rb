@@ -26,7 +26,7 @@ class PtReportSchedule < ActiveRecord::Base
       report_time = Time.now
 
       pt_report_schedules = 
-        PtReportSchedule.where('TIME(report_time) <= TIME(?) AND (updated_at <= ? OR updated_at = created_at)', 
+        PtReportSchedule.where('report_time <= ? AND (updated_at <= ? OR updated_at = created_at)', 
         report_time, report_time.beginning_of_day).includes([:pt_report_receivers, :pt_account])
 
       PtReportSchedule.transaction do
