@@ -19,34 +19,4 @@ require 'spec_helper'
 # that an instance is receiving a specific message.
 
 describe PtReportReceiversController do
-
-  # This should return the minimal set of attributes required to create a valid
-  # PtReportReceiver. As you add validations to PtReportReceiver, be sure to
-  # update the return value of this method accordingly.
-  def valid_attributes
-    { "pt_report_schedule" => "" }
-  end
-
-  # This should return the minimal set of values that should be in the session
-  # in order to pass any filters (e.g. authentication) defined in
-  # PtReportReceiversController. Be sure to keep this updated too.
-  def valid_session
-    {}
-  end
-
-  describe "DELETE destroy" do
-    it "destroys the requested pt_report_receiver" do
-      pt_report_receiver = PtReportReceiver.create! valid_attributes
-      expect {
-        delete :destroy, {:id => pt_report_receiver.to_param}, valid_session
-      }.to change(PtReportReceiver, :count).by(-1)
-    end
-
-    it "redirects to the pt_report_receivers list" do
-      pt_report_receiver = PtReportReceiver.create! valid_attributes
-      delete :destroy, {:id => pt_report_receiver.to_param}, valid_session
-      response.should redirect_to(pt_report_receivers_url)
-    end
-  end
-
 end

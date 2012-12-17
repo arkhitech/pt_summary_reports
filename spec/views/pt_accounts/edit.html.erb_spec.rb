@@ -16,9 +16,8 @@ describe "pt_accounts/edit" do
     # Run the generator again with the --webrat flag if you want to use webrat matchers
     assert_select "form", :action => pt_accounts_path(@pt_account), :method => "post" do
       assert_select "input#pt_account_email", :name => "pt_account[email]"
-      assert_select "input#pt_account_password_digest", :name => "pt_account[password_digest]"
-      assert_select "input#pt_account_api_token", :name => "pt_account[api_token]"
-      assert_select "input#pt_account_user", :name => "pt_account[user]"
+      assert_select "input#pt_account_password", :name => "pt_account[password_digest]"
+      assert_select "input#pt_account_password_confirmation", :name => "pt_account[api_token]"
     end
   end
 end

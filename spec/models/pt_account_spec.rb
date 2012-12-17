@@ -15,21 +15,21 @@ require 'spec_helper'
 
 describe PtAccount do
 
-  before do
-    @user = User.new(email: 'user@example.com', password: 'abcdefg')
-    @pt_account = @user.pt_account.new(email: "user@example.com", password: 'abcdefgh')
+  before :each do
+    @pt_account = FactoryGirl.build(:pt_account)
+    @pt_account.check_pt_connectivity = false
   end
 
   subject { @pt_account }
-
+  
   it { should respond_to(:email) }
   it { should respond_to(:password) }
 
   it { should be_valid }
 
-  describe "when email and api_token is not present" do
-    before { @pt_account.email = '';@pt_account.email = '' }
-    it { should_not be_valid }
+  describe "when email and api_token is not present" do    
+    before { @pt_account.email = nil; @pt_account.api_token = nil}
+    it {should_not be_valid }
   end
 
   describe "when email format is invalid and api_token is not present" do
@@ -67,14 +67,12 @@ describe PtAccount do
   end
 
   describe "when password and api_token is not present" do
-    before { @pt_account.password = ''; @pt_account.api_token = '' }
+    before { @pt_account.password = nil; @pt_account.api_token = nil }
     it { should_not be_valid }
   end
 
-  describe "when email and password is not valid and api_token is not present" do
-  end
+  pending "when email and password is not valid and api_token is not present"
 
-  describe "when api_token is not valid, and email/password is not present" do
-  end
+  pending "when api_token is not valid, and email/password is not present"
   
 end

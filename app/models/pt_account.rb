@@ -17,34 +17,47 @@ class PtAccount < ActiveRecord::Base
 
   attr_accessible :api_token, :email, :password, :password_confirmation
   
-  before_save {|pt_account| 
+  before_save do |pt_account| 
     pt_account.email = pt_account.email.downcase
-    encrypt_password(pt_account.password)
-    }
+  end
                                                                                                                                                             
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i             
 
+  attr_reader :password
+  
   before_create { raise "Password digest missing on new record" if password_digest.blank? }
           
   validates :email, presence: true,                                                                                                                         
     format: { with: VALID_EMAIL_REGEX },                                                                                                                      
     uniqueness: { case_sensitive: false, scope: :user_id }
 
-  validates_confirmation_of :password
-  validates :password, presence: true, on: :create
+  validates_confirmation_of :password, presence: true
+  validates :password, presence: true, unless: :password_digest
 
-  validate :validate_pt_account_connectivity
+  validate :validate_pt_connectivity
   
-  def validate_pt_account_connectivity
-    if self.password.present? && self.password == self.password_confirmation && self.email.present?
-      errors[:base] << 'Unable to connect to PivotalTracker with provided credentials' unless init_pt_client
+  
+  def validate_pt_connectivity
+    if check_pt_connectivity?
+      if self.password_digest.present? && self.email.present?
+        errors[:base] << 
+          'Unable to connect to PivotalTracker with provided credentials' if init_pt_client.nil?
+      end
     end
   end
-
+  
+  def check_pt_connectivity=(flag)
+    @check_pt_client_connectivity = flag
+  end
+  
+  def check_pt_connectivity?
+    @check_pt_client_connectivity ||= false
+  end
+  
   def init_pt_client
     @init_client ||= begin
       if self.api_token.blank?
-        PivotalTracker::Client.token(self.email, self.password)
+        PivotalTracker::Client.token(self.email, self.decrypted_password)
       else
         PivotalTracker::Client.token = self.api_token
       end
@@ -53,8 +66,8 @@ class PtAccount < ActiveRecord::Base
     end
   end
   
-  def password                                                                                                                                              
-    @password ||= encryptor.decrypt_and_verify(self.password_digest)
+  def decrypted_password                                                                                                                                              
+    self.password_digest && encryptor.decrypt_and_verify(self.password_digest)
   end
 
   class << self
@@ -81,7 +94,8 @@ class PtAccount < ActiveRecord::Base
     unless unencrypted_password.blank?
       @password = unencrypted_password
       encrypt_password(unencrypted_password)
-    end
-    
+    else
+      @password = self.password_digest = nil
+    end    
   end
 end

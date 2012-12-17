@@ -24,7 +24,7 @@ describe PtReportSchedulesController do
   # PtReportSchedule. As you add validations to PtReportSchedule, be sure to
   # update the return value of this method accordingly.
   def valid_attributes
-    { "pt_account" => "" }
+    { "pt_account" => "1" }
   end
 
   # This should return the minimal set of values that should be in the session
