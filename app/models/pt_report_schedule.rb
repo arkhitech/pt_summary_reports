@@ -10,10 +10,10 @@
 #
 
 class PtReportSchedule < ActiveRecord::Base
-  belongs_to :pt_account
-  attr_accessible :report_time, :pt_report_receivers_attributes
+  belongs_to :pt_account, inverse_of: :pt_report_schedules
+  has_many :pt_report_receivers, dependent: :destroy, inverse_of: :pt_report_schedule
 
-  has_many :pt_report_receivers, dependent: :destroy
+  attr_accessible :report_time, :pt_report_receivers_attributes
 
   accepts_nested_attributes_for :pt_report_receivers, 
     reject_if: proc { |attrs| attrs.all? { |k, v| v.blank? } }
@@ -97,23 +97,10 @@ class PtReportSchedule < ActiveRecord::Base
     end
     recipients_with_name
   end
-  
-  
-  def init_pt_client
-    @init_client ||= begin
-      if pt_account.api_token.blank?
-        puts "pt_account: #{pt_account.email}, password: #{pt_account.decrypted_password}"
-        PivotalTracker::Client.token(pt_account.email, pt_account.decrypted_password)
-      else
-        PivotalTracker::Client.token = pt_account.api_token
-      end      
-    end
-  end
-  private :init_pt_client
-  
+    
   def available_pt_memberships(pt_projects = nil)
     pt_projects ||= begin
-      init_pt_client
+      return [] unless init_pt_client
       PivotalTracker::Project.all
     end
     pt_memberships = []
@@ -130,8 +117,10 @@ class PtReportSchedule < ActiveRecord::Base
   # a daily email digest with the stories that were started, finished,
   # delivered and discussed the previous day.
   def generate_daily_project_reports
-    init_pt_client
     last_updated_at = updated_at
+    unless init_pt_client
+      PtReportMailer.credentials_mismatch_notification(self).deliver
+    end
     self.touch
 
     projects = PivotalTracker::Project.all

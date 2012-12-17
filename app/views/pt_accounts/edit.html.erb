@@ -1,7 +1,9 @@
-<% provide(:title, "Edit PivotalTracker Account:#{@pt_account.email}") %>
+<% provide(:title, "Edit PivotalTracker Account: #{@pt_account.id}") %>
 <h1>Editing PivotalTracker Account</h1>
 
 <%= render 'form' %>
 
-<%= link_to 'Show', @pt_account %> |
-<%= link_to 'Back', user_pt_accounts_path(@pt_account.user) %>
+<div class="btn-group">
+  <%= link_to 'Show', @pt_account, class: 'btn'%>
+  <%= link_to 'Back', user_pt_accounts_path(@pt_account.user), class: 'btn'%>
+</div>

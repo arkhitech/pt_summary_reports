@@ -5,7 +5,7 @@ PtSummaryReports::Application.routes.draw do
 
   resources :pt_report_receivers, only: :destroy    
 
-  resources :pt_accounts, only: :show do
+  resources :pt_accounts, only: [:show, :edit] do
     resources :pt_report_schedules, except: [:index, :show, :new]
   end
 

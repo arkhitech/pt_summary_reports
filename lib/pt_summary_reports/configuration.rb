@@ -16,10 +16,20 @@ module PtSummaryReports
         if File.file?(filename)
           conf.merge!(load_from_yaml(filename, env))
         end
+        
+        #Configuring email delivery
+        %w(delivery_method smtp_settings sendmail_settings).each do |key|                                                                                   
+          if value = conf.delete(key)                                                                                                                    
+            conf['email_delivery'] ||= {}                                                                                                                
+            conf['email_delivery'][key] = value                                                                                                          
+          end
+        end
+        
         conf
       end
 
       def [](value)
+        puts "config[#{value}]=#{config[value]}"
         config[value]
       end
 

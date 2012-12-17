@@ -1,7 +1,5 @@
-<% provide(:title, "Create PivotalTracker Account:#{@pt_account.email}") %>
+<% provide(:title, "Create PivotalTracker Account") %>
 
 <h1>New PivotalTracker Account</h1>
 
 <%= render 'form' %>
-
-<%= link_to 'Back', user_pt_accounts_path(current_user) %>

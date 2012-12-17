@@ -10,6 +10,6 @@
 #
 
 class PtReportReceiver < ActiveRecord::Base
-  belongs_to :pt_report_schedule
+  belongs_to :pt_report_schedule, inverse_of: :pt_report_receivers
   attr_accessible :pt_membership_id  
 end

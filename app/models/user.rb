@@ -28,5 +28,5 @@ class User < ActiveRecord::Base
   attr_accessible :email, :password, :password_confirmation, :remember_me
   # attr_accessible :title, :body
 
-  has_many :pt_accounts, dependent: :destroy
+  has_many :pt_accounts, dependent: :destroy, inverse_of: :user
 end

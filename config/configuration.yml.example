@@ -1,8 +1,17 @@
-default:
+# production:                                                                                                                                               
+#   email_delivery:                                                                                                                                         
+#     delivery_method: :smtp/:sendmail                                                                                                                                
+#     smtp_settings:   
+#     sendmail_settings:
 
+default:
+  delivery_method: :sendmail
+  secret_key: xxxxxxxxxCHANGE-ME******************
 
 development:
   host: localhost:3000
+  mailer_sender: hisham@techarete.com
 
 production:
   host: ptsummaryreports.com
+  mailer_sender: hisham@techarete.com

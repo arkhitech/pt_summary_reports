@@ -1,29 +1,37 @@
-<%= form_for([@pt_account.user, @pt_account]) do |f| %>
+<%= form_for([@pt_account.user, @pt_account], :html => { :class => 'form-horizontal' }) do |f| %>
   <% if @pt_account.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@pt_account.errors.count, "error") %> prohibited this PivotalTracker account from being saved:</h2>
+  <div id="error_explanation">
+    <h2><%= pluralize(@pt_account.errors.count, "error") %> prohibited this PivotalTracker account from being saved:</h2>
 
-      <ul>
+    <ul>
       <% @pt_account.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>
       <% end %>
-      </ul>
-    </div>
+    </ul>
+  </div>
   <% end %>
-
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.text_field :email %>
-  </div>
-  <div class="field">
-    <%= f.label :password %><br />
-    <%= f.password_field :password %>
-  </div>
-  <div class="field">
-    <%= f.label :password_confirmation, 'Password Confirmation' %><br />
-    <%= f.password_field :password_confirmation %>
-  </div>
-  <div class="actions">
-    <%= f.submit 'Connect Account' %>
-  </div>
-<% end %>
+  <fieldset>
+    <div class="control-group">
+      <%= f.label :email, class: 'control-label' %>
+      <div class="controls">
+        <%= f.text_field :email, class: :text_field %>
+      </div>
+    </div>
+    <div class="control-group">
+      <%= f.label :password, class: 'control-label' %>
+      <div class="controls">
+        <%= f.password_field :password, class: :password_field %>
+      </div>
+    </div>
+    <div class="control-group">
+      <%= f.label :password_confirmation, 'Password Confirmation', class: 'control-label' %>
+      <div class="controls">
+        <%= f.password_field :password_confirmation, class: :password_field %>
+      </div>
+    </div>
+    <div class="form-actions">
+      <%= f.submit (@pt_account.new_record? ? 'Create':'Update'), class: 'btn btn-primary' %>
+        <%= link_to 'Cancel', user_pt_accounts_path(current_user), class: 'btn' %>
+    </div>
+  </fieldset>
+  <% end %>

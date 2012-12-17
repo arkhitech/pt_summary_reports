@@ -1,9 +1,11 @@
-<% provide(:title, "PivotalTracker Account:#{@pt_account.email}") %>
-<p id="notice"><%= notice %></p>
-
+<% provide(:title, "PivotalTracker Account: #{@pt_account.id}") %>
 <p>
   <b>Email:</b>
   <%= @pt_account.email %>
+  <%= link_to 'Edit', edit_pt_account_path(@pt_account), class: 'btn btn-mini' %>
+  <%= link_to 'Destroy', [@pt_account.user, @pt_account], 
+          class:'btn btn-mini btn-danger', method: :delete, data: { confirm: 'Are you sure?' } %>
+  <%= link_to 'Back', user_pt_accounts_path(@pt_account.user), class: 'btn btn-mini' %>
 </p>
 
 <% if @pt_account.pt_report_schedules.any? %>
@@ -16,6 +18,3 @@
 <h2>Add a schedule:</h2>             
 <% @pt_report_schedule = @pt_account.pt_report_schedules.build %>
 <%= render "pt_report_schedules/form" %>  
-
-<%= link_to 'Edit', edit_pt_account_path(@pt_account) %> |
-<%= link_to 'Back', pt_accounts_path %>

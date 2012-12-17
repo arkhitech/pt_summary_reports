@@ -1,28 +1,24 @@
-<%= form_for([@pt_report_schedule.pt_account, @pt_report_schedule]) do |f| %>
-  <% if @pt_report_schedule && @pt_report_schedule.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@pt_report_schedule.errors.count, "error") %> prohibited this report schedule from being saved:</h2>
-
-      <ul>
-      <% @pt_report_schedule.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
+<%= form_for([@pt_report_schedule.pt_account, @pt_report_schedule], 
+  :html => { :class => 'form-horizontal' }) do |f| %>
+  <fieldset>
+    <div class="control-group"">
+      <%= f.label :report_time, 'Report Time', class: 'control-label' %>
+      <div class="controls">
+        <%= f.time_select :report_time, class: :time_select %> UTC
+      </div>
     </div>
-  <% end %>
-
-  <div class="field">
-    <%= f.label :report_time %><br />
-    <%= f.time_select :report_time %> UTC
-  </div>
-
-  <p id="pt_report_receivers_form">
-    <%= f.label :pt_report_receivers, 'Report Receivers' %><br/>
-   <span id="pt_report_receivers">                                                                                                                           
-      <%= pt_report_receiver_checkboxes(@pt_report_schedule) %>                                                                                             
-    </span>  
-  </p>
-  <div class="actions">
-    <%= f.submit 'Update Schedule'%>
-  </div>
+    <div class="control-group">
+      <h3>Report Receivers</h3>
+      <div class="controls">
+        <%= pt_report_receiver_checkboxes(@pt_report_schedule) %>
+      </div>  
+    </div>
+    <div class="form-actions">
+      <%= f.submit 'Create Schedule', class:'btn btn-primary'%>
+      <%unless @pt_report_schedule.new_record? %>
+        <%= f.submit 'Update Schedule', class:'btn btn-primary'%>
+        <%= link_to 'Back', @pt_report_schedule.pt_account, class: 'btn' %>
+      <% end %>
+    </div>
+  </fieldset>
 <% end %>

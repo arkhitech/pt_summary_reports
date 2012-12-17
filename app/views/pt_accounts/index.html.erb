@@ -1,24 +1,26 @@
 <% provide(:title, 'Pivotal Tracker Accounts') %>
 <h1>PivotalTracker Accounts</h1>
 <%unless @pt_accounts.empty?%>
-<table>
-  <tr>
-    <th>Email</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
-<% @pt_accounts.each do |pt_account| %>
-  <tr>
-    <td><%= pt_account.email %></td>
-    <td><%= link_to 'Show', pt_account %></td>
-    <td><%= link_to 'Edit', edit_user_pt_account_path(pt_account.user, pt_account) %></td>
-    <td><%= link_to 'Destroy', [pt_account.user, pt_account], method: :delete, data: { confirm: 'Are you sure?' } %></td>
-  </tr>
-<% end %>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Email</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+  <% @pt_accounts.each do |pt_account| %>
+    <tr>
+      <td><%= pt_account.email %></td>
+      <td class="btn-group">
+        <%= link_to 'Show', pt_account, class:'btn btn-mini' %>
+        <%= link_to 'Edit', edit_user_pt_account_path(pt_account.user, pt_account), class:'btn btn-mini' %>
+        <%= link_to 'Destroy', [pt_account.user, pt_account], 
+                class:'btn btn-mini btn-danger', method: :delete, data: { confirm: 'Are you sure?' } %>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
 </table>
-
-<br />
 <% end %>
-<%= link_to 'New Account', new_user_pt_account_path(current_user) %>
+<%= link_to 'New', new_user_pt_account_path(current_user), class:'btn btn-primary' %>
