@@ -88,7 +88,7 @@ class PtReportSchedule < ActiveRecord::Base
       report_receiver_ids << report_receiver.pt_membership_id
     end
     
-    init_pt_client
+    pt_account.init_pt_client
     pt_memberships = available_pt_memberships(pt_projects)
     recipients_with_name = []
     pt_memberships.each do |pt_membership|
@@ -100,7 +100,7 @@ class PtReportSchedule < ActiveRecord::Base
     
   def available_pt_memberships(pt_projects = nil)
     pt_projects ||= begin
-      return [] unless init_pt_client
+      return [] unless pt_account.init_pt_client
       PivotalTracker::Project.all
     end
     pt_memberships = []
@@ -118,7 +118,7 @@ class PtReportSchedule < ActiveRecord::Base
   # delivered and discussed the previous day.
   def generate_daily_project_reports
     last_updated_at = updated_at
-    unless init_pt_client
+    unless pt_account.init_pt_client
       PtReportMailer.credentials_mismatch_notification(self).deliver
     end
     self.touch

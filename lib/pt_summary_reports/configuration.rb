@@ -29,7 +29,7 @@ module PtSummaryReports
       end
 
       def [](value)
-        puts "config[#{value}]=#{config[value]}"
+        #puts "config[#{value}]=#{config[value]}"
         config[value]
       end
 

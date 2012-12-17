@@ -14,10 +14,11 @@
       </div>  
     </div>
     <div class="form-actions">
-      <%= f.submit 'Create Schedule', class:'btn btn-primary'%>
       <%unless @pt_report_schedule.new_record? %>
         <%= f.submit 'Update Schedule', class:'btn btn-primary'%>
         <%= link_to 'Back', @pt_report_schedule.pt_account, class: 'btn' %>
+      <% else %>
+        <%= f.submit 'Create Schedule', class:'btn btn-primary'%>
       <% end %>
     </div>
   </fieldset>
