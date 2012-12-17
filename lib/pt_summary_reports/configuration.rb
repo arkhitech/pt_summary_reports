@@ -28,9 +28,8 @@ module PtSummaryReports
         conf
       end
 
-      def [](value)
-        #puts "config[#{value}]=#{config[value]}"
-        config[value]
+      def [](key)
+        config[key] || ENV[key]
       end
 
       private
@@ -41,8 +40,9 @@ module PtSummaryReports
         begin
           yaml = YAML::load_file(filename)
         rescue ArgumentError
-          $stderr.puts "Your PtSummaryReports configuration file located at #{filename} is not a valid YAML file and could not be loaded."
-          exit 1
+          #$stderr.puts "Your PtSummaryReports configuration file located at #{filename} is not a valid YAML file and could not be loaded."
+          #exit 1
+          yaml = {}
         end
         conf = {}
         if yaml.is_a?(Hash)

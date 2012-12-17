@@ -80,7 +80,7 @@ class PtAccountsController < ApplicationController
     @pt_account.destroy
 
     respond_to do |format|
-      format.html { redirect_to pt_accounts_url }
+      format.html { redirect_to [@pt_account.user, @pt_account] }
       format.json { head :no_content }
     end
   end
