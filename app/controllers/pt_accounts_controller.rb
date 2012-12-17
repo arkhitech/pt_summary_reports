@@ -14,7 +14,8 @@ class PtAccountsController < ApplicationController
   # GET /users/1/pt_accounts/1
   # GET /users/1/pt_accounts/1.json
   def show
-    @pt_account = current_user.pt_accounts.find(params[:id])
+    @pt_account = current_user.pt_accounts.find(params[:id], 
+      :include => {pt_report_schedules: :pt_report_receivers})
     
     respond_to do |format|
       format.html # show.html.erb

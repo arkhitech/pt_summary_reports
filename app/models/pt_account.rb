@@ -19,7 +19,7 @@ class PtAccount < ActiveRecord::Base
   
   before_save {|pt_account| 
     pt_account.email = pt_account.email.downcase
-    encrypt_password
+    encrypt_password(pt_account.password)
     }
                                                                                                                                                             
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i             
@@ -33,18 +33,18 @@ class PtAccount < ActiveRecord::Base
   validates_confirmation_of :password
   validates :password, presence: true, on: :create
 
-  validate :pt_account_connectivity
+  validate :validate_pt_account_connectivity
   
   def validate_pt_account_connectivity
-    if self.password.present? && self.password_confirmation.present? && self.email.present
-      errors[:base] << 'Invalid PivotalAccount credentials' unless init_pt_client
+    if self.password.present? && self.password == self.password_confirmation && self.email.present?
+      errors[:base] << 'Unable to connect to PivotalTracker with provided credentials' unless init_pt_client
     end
   end
 
   def init_pt_client
     @init_client ||= begin
-      if api_token.blank?
-        PivotalTracker::Client.token(self.email, password)
+      if self.api_token.blank?
+        PivotalTracker::Client.token(self.email, self.password)
       else
         PivotalTracker::Client.token = self.api_token
       end
@@ -54,27 +54,33 @@ class PtAccount < ActiveRecord::Base
   end
   
   def password                                                                                                                                              
-    @password ||= encryptor.decrypt(self.password_digest)
+    @password ||= encryptor.decrypt_and_verify(self.password_digest)
   end
 
   class << self
     def secret=(key)
       @@secret = key
     end
+    
+    def secret
+      @@secret ||= PtSummaryReports::Configuration['secret_key']
+    end
   end
   
   def encryptor
-    ActiveSupport::MessageEncryptor.new(@@secret)    
+    ActiveSupport::MessageEncryptor.new(PtAccount.secret)    
   end
+  private :encryptor
   
-  def encrypt_password
-    self.password_digest = encryptor.encrypt(password)
+  def encrypt_password(password)
+    self.password_digest = encryptor.encrypt_and_sign(password)
   end
+  private :encrypt_password
   
   def password=(unencrypted_password)
     unless unencrypted_password.blank?
       @password = unencrypted_password
-      self.password_digest = encryptor.encrypt(unencrypted_password)
+      encrypt_password(unencrypted_password)
     end
     
   end
