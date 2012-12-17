@@ -8,7 +8,11 @@
       method: :delete, data: { confirm: 'Are you sure?' }, class:'btn btn-mini btn-danger' %>
   </p>
   <p>
-    <%= render :partial => "pt_report_receivers/pt_report_receiver", :collection => pt_report_schedule.pt_report_receivers %>  
+    <%if pt_report_schedule.pt_report_receivers.any? %>
+      <%= render :partial => "pt_report_receivers/pt_report_receiver", :collection => pt_report_schedule.pt_report_receivers %>  
+    <% else %>
+      No report receivers selected
+    <% end %>
   </p>
 </div>   
 

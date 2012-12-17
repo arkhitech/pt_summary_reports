@@ -26,7 +26,7 @@ class PtReportSchedule < ActiveRecord::Base
       report_time = Time.now
 
       pt_report_schedules = 
-        PtReportSchedule.where('report_time <= TIME(?) AND updated_at <= ?', 
+        PtReportSchedule.where('TIME(report_time) <= TIME(?) AND (updated_at <= ? OR updated_at = created_at)', 
         report_time, report_time.beginning_of_day)
 
       PtReportSchedule.transaction do
@@ -47,7 +47,7 @@ class PtReportSchedule < ActiveRecord::Base
     end
     
     pt_membership_ids = receiver_attributes.collect {
-      |report_receiver| report_receiver[:pt_membership_id]}
+      |report_receiver| report_receiver[:pt_membership_id].to_i}
     
     #remove pt_membership_ids not included
     self.pt_report_receivers.
