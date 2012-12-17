@@ -1,4 +1,5 @@
 <div id=stories>
+  <% if stories.any? %>
   <ul>
     <% stories.each do |story| %>
     <li id=<%=story.id%>>
@@ -7,4 +8,7 @@
     </li>
     <% end %>
   </ul>
+  <% else %>
+  NONE
+  <% end %>
 </div>

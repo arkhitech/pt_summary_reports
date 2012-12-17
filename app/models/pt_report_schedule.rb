@@ -27,11 +27,11 @@ class PtReportSchedule < ActiveRecord::Base
 
       pt_report_schedules = 
         PtReportSchedule.where('TIME(report_time) <= TIME(?) AND (updated_at <= ? OR updated_at = created_at)', 
-        report_time, report_time.beginning_of_day)
+        report_time, report_time.beginning_of_day).includes([:pt_report_receivers, :pt_account])
 
       PtReportSchedule.transaction do
         pt_report_schedules.each do |pt_report_schedule|
-          pt_report_schedule.send_daily_report
+          pt_report_schedule.send_daily_report if pt_report_schedule.pt_report_receivers.any?
         end
       end
     end    
@@ -76,7 +76,7 @@ class PtReportSchedule < ActiveRecord::Base
   
   def send_daily_report
     daily_project_reports = generate_daily_project_reports
-    PtReportMailer.daily_report(daily_project_reports).deliver
+    PtReportMailer.daily_report(daily_project_reports).deliver if daily_project_reports
   end
 
   def get_recipients(pt_projects)
@@ -120,13 +120,15 @@ class PtReportSchedule < ActiveRecord::Base
     last_updated_at = updated_at
     unless pt_account.init_pt_client
       PtReportMailer.credentials_mismatch_notification(self).deliver
+      self.touch
+      return nil
     end
     self.touch
 
     projects = PivotalTracker::Project.all
-    daily_project_reports = {:recipients => get_recipients(projects)}
+    daily_project_reports = {recipients: get_recipients(projects), projects: []}
     projects.each do |project|
-      daily_project_reports[project.name] = generate_project_report(project, last_updated_at)
+      daily_project_reports[:projects] << generate_daily_project_report(project, last_updated_at)
     end    
     daily_project_reports
   end

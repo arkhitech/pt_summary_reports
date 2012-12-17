@@ -1,9 +1,9 @@
 class PtReportMailer < ActionMailer::Base
-  default from: "from@example.com"
+  default from: PtSummaryReports::Configuration['mailer_sender']
   
-  def daily_report(daily_project_reports)
-    @daily_project_reports = daily_project_reports
-    mail(to: daily_project_reports[:recipients], 
+  def daily_report(daily_project_reports_with_recipients)
+    @daily_project_reports = daily_project_reports_with_recipients[:projects]
+    mail(to: daily_project_reports_with_recipients[:recipients], 
       subject: "Daily Pivotal Tracker Summary Report")
   end
   

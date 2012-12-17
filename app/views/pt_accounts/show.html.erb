@@ -9,12 +9,12 @@
 </p>
 
 <% if @pt_account.pt_report_schedules.any? %>
-<h2>Report Schedule</h2>                                                                                                                                           
+<h2>Report Schedules</h2>                                                                                                                                           
 <div id="pt_report_schedule">                                                                                                                                         
   <%= render :partial => "pt_report_schedules/pt_report_schedule", :collection => @pt_account.pt_report_schedules %>  
 </div>                                                                                                                                                      
 <div id="pt_report_schedule-notice"></div>  
 <% end %>
-<h3>Add a schedule:</h3>             
+<h3>Add a schedule</h3>             
 <% @pt_report_schedule = @pt_account.pt_report_schedules.build %>
 <%= render "pt_report_schedules/form" %>  

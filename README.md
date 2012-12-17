@@ -3,4 +3,7 @@ Receive a daily email digest with the stories that were started, finished, deliv
 
 A user is able to create an account, followed by connecting with their Pivotal Tracker account. Then they are be able to select a time for when the email should be sent out, and which project members should receive the email.
 
-
+## Deployment to Heroku
+For deploying to heroku, make changes to configuration.yml and then run 
+    % rake heroku:config' 
+to add configuration to heroku environment

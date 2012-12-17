@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121212120237) do
+ActiveRecord::Schema.define(:version => 20121217175020) do
 
   create_table "pt_accounts", :force => true do |t|
     t.string   "email"
@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(:version => 20121212120237) do
     t.datetime "updated_at",      :null => false
   end
 
+  add_index "pt_accounts", ["email", "user_id"], :name => "by_email_user", :unique => true
   add_index "pt_accounts", ["user_id"], :name => "index_pt_accounts_on_user_id"
 
   create_table "pt_report_receivers", :force => true do |t|
@@ -31,6 +32,7 @@ ActiveRecord::Schema.define(:version => 20121212120237) do
     t.datetime "updated_at",            :null => false
   end
 
+  add_index "pt_report_receivers", ["pt_membership_id", "pt_report_schedule_id"], :name => "by_pt_membership_schedule", :unique => true
   add_index "pt_report_receivers", ["pt_report_schedule_id"], :name => "index_pt_report_receivers_on_pt_report_schedule_id"
 
   create_table "pt_report_schedules", :force => true do |t|
