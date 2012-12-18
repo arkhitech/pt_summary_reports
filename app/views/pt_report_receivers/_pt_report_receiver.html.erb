@@ -1,7 +1,6 @@
-<p>
-  <b>Receiver:</b>
-  <%= pt_report_receiver.pt_membership_id %> 
+<li>
+  <%= pt_report_receiver.pt_membership_name %> 
   <%= link_to 'Remove', pt_report_receiver, 
-    method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn' %></td>
-</p>
+    method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-mini btn-danger' %></td>
+</li>
 

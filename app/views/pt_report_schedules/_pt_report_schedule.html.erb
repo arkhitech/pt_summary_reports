@@ -9,7 +9,10 @@
   </p>
   <p>
     <%if pt_report_schedule.pt_report_receivers.any? %>
+    <b>Receivers:</b>
+    <ul>
       <%= render :partial => "pt_report_receivers/pt_report_receiver", :collection => pt_report_schedule.pt_report_receivers %>  
+    </ul>
     <% else %>
       No report receivers selected
     <% end %>

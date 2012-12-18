@@ -99,16 +99,16 @@ class PtReportSchedule < ActiveRecord::Base
   end
     
   def available_pt_memberships(pt_projects = nil)
-    pt_projects ||= begin
-      return [] unless pt_account.init_pt_client
-      PivotalTracker::Project.all
+    if pt_projects.nil?
+      pt_account.pt_memberships
+    else
+      pt_memberships = []
+
+      pt_projects.each do |pt_project|
+        pt_memberships += pt_project.memberships.all
+      end
+      pt_memberships      
     end
-    pt_memberships = []
-    
-    pt_projects.each do |pt_project|
-      pt_memberships += pt_project.memberships.all
-    end
-    pt_memberships
   end
   
   def pt_report_receiver?(pt_membership)
@@ -125,7 +125,7 @@ class PtReportSchedule < ActiveRecord::Base
     end
     self.touch
 
-    projects = PivotalTracker::Project.all
+    projects = pt_account.pt_projects
     daily_project_reports = {recipients: get_recipients(projects), projects: []}
     projects.each do |project|
       daily_project_reports[:projects] << generate_daily_project_report(project, last_updated_at)
@@ -146,7 +146,7 @@ class PtReportSchedule < ActiveRecord::Base
       :modified_since => last_updated_at.strftime('%m/%d/%Y'))
     
     stories.each do |story|
-      next unless story.updated_at > last_updated_at
+      #TODO next unless story.updated_at > last_updated_at
 
       case story.current_state
       when /started/i

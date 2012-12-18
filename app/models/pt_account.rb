@@ -51,7 +51,37 @@ class PtAccount < ActiveRecord::Base
   end
   
   def check_pt_connectivity?
-    @check_pt_client_connectivity ||= false
+    @check_pt_client_connectivity ||= true
+  end
+  
+  def pt_projects
+    @pt_projects ||= begin
+      if init_pt_client
+        PivotalTracker::Project.all
+      else
+        []
+      end
+    end
+  end
+  
+  def pt_memberships
+    @pt_memberships ||= begin
+      pt_memberships = []
+      pt_projects.each do |pt_project|
+        pt_memberships += pt_project.memberships.all
+      end
+      pt_memberships
+    end
+  end
+  
+  def pt_memberships_by_id
+    @pt_memberships_by_id ||= begin
+      members_by_id = {}
+      pt_memberships.each do |pt_member|
+        members_by_id[pt_member.id] = pt_member
+      end
+      members_by_id
+    end
   end
   
   def init_pt_client

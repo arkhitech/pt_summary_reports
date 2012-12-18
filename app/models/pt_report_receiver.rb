@@ -12,4 +12,9 @@
 class PtReportReceiver < ActiveRecord::Base
   belongs_to :pt_report_schedule, inverse_of: :pt_report_receivers
   attr_accessible :pt_membership_id  
+  
+  def pt_membership_name
+    pt_membership = pt_report_schedule.pt_account.pt_memberships_by_id[pt_membership_id].name 
+#    (pt_membership && pt_membership.name) || pt_membership_id    
+  end
 end

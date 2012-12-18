@@ -11,7 +11,7 @@
   <tbody>
   <% @pt_accounts.each do |pt_account| %>
     <tr>
-      <td><%= pt_account.email %></td>
+      <td><%= link_to pt_account.email, pt_account %></td>
       <td class="btn-group">
         <%= link_to 'Show', pt_account, class:'btn btn-mini' %>
         <%= link_to 'Edit', edit_user_pt_account_path(pt_account.user, pt_account), class:'btn btn-mini' %>
@@ -23,4 +23,4 @@
   </tbody>
 </table>
 <% end %>
-<%= link_to 'New', new_user_pt_account_path(current_user), class:'btn btn-primary' %>
+<%= link_to 'Add Account', new_user_pt_account_path(current_user), class:'btn btn-primary' %>
