@@ -1,7 +1,7 @@
 class PtAccountsController < ApplicationController
   before_filter :authenticate_user!
-  # GET /users/1/pt_accounts
-  # GET /users/1/pt_accounts.json
+  # GET /pt_accounts
+  # GET /pt_accounts.json
   def index
     @pt_accounts = current_user.pt_accounts.all
 
@@ -11,8 +11,8 @@ class PtAccountsController < ApplicationController
     end
   end
 
-  # GET /users/1/pt_accounts/1
-  # GET /users/1/pt_accounts/1.json
+  # GET /pt_accounts/1
+  # GET /pt_accounts/1.json
   def show
     @pt_account = current_user.pt_accounts.find(params[:id], 
       :include => {pt_report_schedules: :pt_report_receivers})
@@ -23,8 +23,8 @@ class PtAccountsController < ApplicationController
     end
   end
 
-  # GET /users/1/pt_accounts/new
-  # GET /users/1/pt_accounts/new.json
+  # GET /pt_accounts/new
+  # GET /pt_accounts/new.json
   def new
     @pt_account = current_user.pt_accounts.build
 
@@ -34,13 +34,13 @@ class PtAccountsController < ApplicationController
     end
   end
 
-  # GET /users/1/pt_accounts/1/edit
+  # GET /pt_accounts/1/edit
   def edit
     @pt_account = current_user.pt_accounts.find(params[:id])
   end
 
-  # POST /users/1/pt_accounts
-  # POST /users/1/pt_accounts.json
+  # POST /pt_accounts
+  # POST /pt_accounts.json
   def create
     @pt_account = current_user.pt_accounts.build(params[:pt_account])
 
@@ -57,8 +57,8 @@ class PtAccountsController < ApplicationController
     end
   end
 
-  # PUT /users/1/pt_accounts/1
-  # PUT /users/1/pt_accounts/1.json
+  # PUT /pt_accounts/1
+  # PUT /pt_accounts/1.json
   def update
     @pt_account = current_user.pt_accounts.find(params[:id])
 

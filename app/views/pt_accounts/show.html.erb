@@ -1,20 +1,22 @@
 <% provide(:title, "PivotalTracker Account: #{@pt_account.id}") %>
-<p>
-  <b>Email:</b>
-  <%= @pt_account.email %>
-  <%= link_to 'Edit', edit_pt_account_path(@pt_account), class: 'btn btn-mini' %>
-  <%= link_to 'Destroy', [@pt_account.user, @pt_account], 
-          class:'btn btn-mini btn-danger', method: :delete, data: { confirm: 'Are you sure?' } %>
-  <%= link_to 'Back', user_pt_accounts_path(@pt_account.user), class: 'btn btn-mini' %>
-</p>
+<div class="row">
+  <div class="span3">
+    <b>Email:</b>
+    <%= @pt_account.email %>
+  </div>
+  <div class="span3">
+    <%= link_to raw('<i class="icon-edit"></i>'), edit_pt_account_path(@pt_account), class: 'btn btn-mini' %>
+    <%= link_to raw('<i class="icon-trash icon-white"></i>'), @pt_account, 
+            class:'btn btn-mini btn-danger', method: :delete, data: { confirm: 'Are you sure?' } %>
+    <%= link_to 'Back', pt_accounts_path, class: 'btn btn-mini' %>
+  </div>
+</div>
 
 <% if @pt_account.pt_report_schedules.any? %>
-<h2>Report Schedules</h2>                                                                                                                                           
-<div id="pt_report_schedule">                                                                                                                                         
-  <%= render :partial => "pt_report_schedules/pt_report_schedule", :collection => @pt_account.pt_report_schedules %>  
-</div>                                                                                                                                                      
-<div id="pt_report_schedule-notice"></div>  
+<h2>Report Schedules</h2>
+<%= render partial: 'pt_report_schedules/pt_report_schedule', collection: @pt_account.pt_report_schedules %>  
 <% end %>
+
 <h3>Add a schedule</h3>             
 <% @pt_report_schedule = @pt_account.pt_report_schedules.build %>
 <%= render "pt_report_schedules/form" %>  

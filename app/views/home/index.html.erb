@@ -1,2 +1,6 @@
 <% provide(:title, 'Home') %>
-<%= render :file => 'devise/sessions/new' %>
+
+<% if user_signed_in? %> 
+<% else %>
+  <%= render :file => 'devise/sessions/new' %>  
+<% end %>

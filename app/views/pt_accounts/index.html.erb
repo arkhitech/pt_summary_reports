@@ -1,10 +1,10 @@
 <% provide(:title, 'Pivotal Tracker Accounts') %>
 <h1>PivotalTracker Accounts</h1>
 <%unless @pt_accounts.empty?%>
-<table class="table table-striped">
+<table class="table table-striped table-bordered table-hovered">
   <thead>
     <tr>
-      <th>Email</th>
+      <th>PivotalTracker Account</th>
       <th>Actions</th>
     </tr>
   </thead>
@@ -12,15 +12,20 @@
   <% @pt_accounts.each do |pt_account| %>
     <tr>
       <td><%= link_to pt_account.email, pt_account %></td>
-      <td class="btn-group">
-        <%= link_to 'Show', pt_account, class:'btn btn-mini' %>
-        <%= link_to 'Edit', edit_user_pt_account_path(pt_account.user, pt_account), class:'btn btn-mini' %>
-        <%= link_to 'Destroy', [pt_account.user, pt_account], 
-                class:'btn btn-mini btn-danger', method: :delete, data: { confirm: 'Are you sure?' } %>
+      <td>
+        <div class="btn-group">
+          <%= link_to 'Show', pt_account, class:'btn btn-mini' %>
+          <%= link_to 'Edit', edit_pt_account_path(pt_account), class:'btn btn-mini' %>
+          <%= link_to 'Remove', pt_account, 
+                  class:'btn btn-mini btn-danger', method: :delete, data: { confirm: 'Are you sure?' } %>
+        </div>
       </td>
     </tr>
   <% end %>
   </tbody>
+  <tr>
+    <td></td>
+    <td><%= link_to 'Add Account', new_pt_account_path, class:'btn btn-primary' %></td>
+  </tr>
 </table>
 <% end %>
-<%= link_to 'Add Account', new_user_pt_account_path(current_user), class:'btn btn-primary' %>

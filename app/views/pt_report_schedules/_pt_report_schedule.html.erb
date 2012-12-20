@@ -1,21 +1,29 @@
-<div id=pt_report_schedule_<%=pt_report_schedule.id%>>                                                                                                                            
-  <p>
-    <b>Report time:</b>
-    <%= pt_report_schedule.report_time.strftime('%H:%M') %> UTC
-    <%= link_to 'Edit', edit_pt_account_pt_report_schedule_path(pt_report_schedule.pt_account, 
-      pt_report_schedule), class:'btn btn-mini' %>
-    <%= link_to 'Destroy Schedule', [pt_report_schedule.pt_account, pt_report_schedule], 
-      method: :delete, data: { confirm: 'Are you sure?' }, class:'btn btn-mini btn-danger' %>
-  </p>
-  <p>
-    <%if pt_report_schedule.pt_report_receivers.any? %>
-    <b>Receivers:</b>
-    <ul>
-      <%= render :partial => "pt_report_receivers/pt_report_receiver", :collection => pt_report_schedule.pt_report_receivers %>  
-    </ul>
-    <% else %>
-      No report receivers selected
-    <% end %>
-  </p>
-</div>   
+<tr><td>
+<div id=pt_report_schedule_<%=pt_report_schedule.id%> class="row">
+  <div class="span9 bordered">
+    <div class="row">
+      <div class="span6">
+        <b>Report time:</b>
+        <%= pt_report_schedule.report_time.strftime('%H:%M') %> UTC
+      </div>
+      <div class="span3">
+        <%= link_to raw('<i class="icon-edit"></i>'), edit_pt_account_pt_report_schedule_path(pt_report_schedule.pt_account, 
+          pt_report_schedule), class:'btn btn-mini' %>
+          <%= link_to raw('<i class="icon-trash icon-white"></i>'), [pt_report_schedule.pt_account, pt_report_schedule], 
+            method: :delete, data: { confirm: 'Are you sure?' }, class:'btn btn-mini btn-danger' %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="span6 offset1">
+      <%if pt_report_schedule.pt_report_receivers.any? %>
+        <b>Receivers:</b>
+        <%= render :partial => "pt_report_receivers/pt_report_receiver", :collection => pt_report_schedule.pt_report_receivers %>  
+      <% else %>
+        No report receivers selected
+      <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+  </td></tr>
 

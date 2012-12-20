@@ -1,25 +1,27 @@
-<%= form_for([@pt_report_schedule.pt_account, @pt_report_schedule], 
-  :html => { :class => 'form-horizontal' }) do |f| %>
+<%= simple_form_for([@pt_report_schedule.pt_account, @pt_report_schedule], 
+  html: { class: 'form-horizontal' }) do |f| %>
+  <%= f.error_notification %>
+  <%= display_errors @pt_report_schedule %>
   <fieldset>
-    <div class="control-group"">
-      <%= f.label :report_time, 'Report Time', class: 'control-label' %>
+    <div class="control-group">
+      <strong><%= f.label :report_time %></strong>
       <div class="controls">
-        <%= f.time_select :report_time, class: :time_select %> UTC
+        <%= f.input_field :report_time %> UTC
       </div>
     </div>
     <div class="control-group">
-      <h4>Select Report Receivers</h4>
+      <strong>Report Receivers</strong>
       <div class="controls">
         <%= pt_report_receiver_checkboxes(@pt_report_schedule) %>
       </div>  
     </div>
     <div class="form-actions">
-      <%unless @pt_report_schedule.new_record? %>
-        <%= f.submit 'Update Schedule', class:'btn btn-primary'%>
-        <%= link_to 'Back', @pt_report_schedule.pt_account, class: 'btn' %>
-      <% else %>
-        <%= f.submit 'Create Schedule', class:'btn btn-primary'%>
-      <% end %>
+    <%unless @pt_report_schedule.new_record? %>
+      <%= f.button :submit, 'Update Schedule', class:'btn btn-primary'%>
+      <%= link_to 'Cancel', @pt_report_schedule.pt_account, class: 'btn' %>
+    <% else %>
+      <%= f.button :submit, 'Create Schedule', class:'btn btn-primary'%>
+    <% end %>
     </div>
   </fieldset>
 <% end %>

@@ -1,6 +1,9 @@
-<li>
-  <%= pt_report_receiver.pt_membership_name %> 
-  <%= link_to 'Remove', pt_report_receiver, 
-    method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-mini btn-danger' %></td>
-</li>
-
+<div class="row">
+  <div class="span3">
+    <%= pt_report_receiver.pt_membership_name %> 
+  </div>
+  <div class="span3">
+    <%= link_to raw('<i class="icon-trash icon-white"></i>'), pt_report_receiver, 
+      method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-mini btn-danger' %></td>
+  </div>
+</div>

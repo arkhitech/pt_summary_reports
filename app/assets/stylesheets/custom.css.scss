@@ -1,3 +1,19 @@
 @import "bootstrap";
 body { padding-top: 60px; }
 @import "bootstrap-responsive";
+
+.btn-primary:visited, .btn-warning:visited, .btn-danger:visited,  .btn-success:visited, .btn-info:visited,  .btn-inverse:visited {
+    color: #FFFFFF;
+}
+
+fieldset {
+    border: 1px solid #eaeaea;
+}
+
+footer {
+    border-top: 1px solid #eaeaea;
+}
+
+.bordered {
+    border: 1px solid #eaeaea;
+}

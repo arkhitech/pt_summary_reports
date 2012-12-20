@@ -12,4 +12,6 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require bootstrap
+//= require bootstrap-tooltip.js
 //= require_tree .

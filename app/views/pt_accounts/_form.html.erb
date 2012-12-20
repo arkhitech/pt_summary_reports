@@ -1,37 +1,13 @@
-<%= form_for([@pt_account.user, @pt_account], :html => { :class => 'form-horizontal' }) do |f| %>
-  <% if @pt_account.errors.any? %>
-  <div id="error_explanation">
-    <h2><%= pluralize(@pt_account.errors.count, "error") %> prohibited this PivotalTracker account from being saved:</h2>
-
-    <ul>
-      <% @pt_account.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-    </ul>
-  </div>
-  <% end %>
+<%= simple_form_for(@pt_account, html: { class: 'form-horizontal' }) do |f| %>
+  <%= f.error_notification %>
+  <%= display_errors @pt_account %>
   <fieldset>
-    <div class="control-group">
-      <%= f.label :email, class: 'control-label' %>
-      <div class="controls">
-        <%= f.text_field :email, class: :text_field %>
-      </div>
-    </div>
-    <div class="control-group">
-      <%= f.label :password, class: 'control-label' %>
-      <div class="controls">
-        <%= f.password_field :password, class: :password_field %>
-      </div>
-    </div>
-    <div class="control-group">
-      <%= f.label :password_confirmation, 'Password Confirmation', class: 'control-label' %>
-      <div class="controls">
-        <%= f.password_field :password_confirmation, class: :password_field %>
-      </div>
-    </div>
+    <%= f.input :email, required: true %>
+    <%= f.input :password, required: true %>
+    <%= f.input :password_confirmation, required: true %>
     <div class="form-actions">
-      <%= f.submit (@pt_account.new_record? ? 'Create':'Update'), class: 'btn btn-primary' %>
-        <%= link_to 'Cancel', user_pt_accounts_path(current_user), class: 'btn' %>
+      <%= f.button :submit, (@pt_account.new_record? ? 'Create':'Update'), class: 'btn btn-primary' %>
+      <%= link_to 'Cancel', pt_accounts_path, class: 'btn' %>
     </div>
   </fieldset>
   <% end %>

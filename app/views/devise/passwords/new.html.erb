@@ -1,0 +1,10 @@
+<%= render "devise/shared/tabs" %>
+<%= simple_form_for(resource, as: resource_name, 
+  url: password_path(resource_name), html: { method: :post, class: 'form-inline' }) do |f| %>
+  <%= display_errors resource, :base %>
+  <%= display_errors resource, :email, true %>
+  <%= f.input_field :email, placeholder: 'Email' %>
+
+  <%= f.submit "Reset password", class: 'btn-primary' %>
+<% end %>
+

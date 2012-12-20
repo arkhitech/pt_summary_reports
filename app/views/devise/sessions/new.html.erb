@@ -1,0 +1,15 @@
+<%= render "devise/shared/tabs" %>
+<%= simple_form_for(resource, :as => resource_name, :url =>
+session_path(resource_name), :html => {:class => 'form-vertical' }) do
+|f| %>
+  <%= f.error_notification %>
+  <%= display_errors resource %>
+  <fieldset>
+    <%= f.input_field :email, autofocus: true, placeholder: 'Email' %>
+    <%= f.input_field :password, placeholder: 'Password' %>
+    
+    <%= f.input_field :remember_me, as: :boolean, inline_label: 'Remember me' if
+    devise_mapping.rememberable? %> 
+    <%= f.button :submit, "Sign in", :class => 'btn-primary' %>
+  </fieldset>
+<% end %>

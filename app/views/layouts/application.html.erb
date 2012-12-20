@@ -11,47 +11,66 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
   </head>
   <body>
-    <header class="navbar navbar-fixed-top navbar-inverse">
-      <div class="navbar-inner">
-        <div class="container">      
-          <%= link_to "PivotalTracker Summary Reports", root_path, id: "logo", class: "brand" %>
-          <nav>
-            <div class="nav pull-right">
-            <% if user_signed_in? %>                                                                                                                                
-              Signed in as <%= current_user.email %>.                                                                                                       
-              <%= link_to "Sign out", destroy_user_session_path, method: :delete, class: 'btn-mini'%>
-            </div>
-            <% else %>                                                                                                                                                      
-              <ul class="nav pull-right">
-                <li><%= link_to "Sign up", new_user_registration_path %></li>
-                <li><%= link_to "Sign in", new_user_session_path %></li>
-              </ul>
-            <% end %>
-          </nav>
+    <!-- Navbar -->
+    <header>
+      <div class="header navbar navbar-fixed-top navbar-inverse">
+        <div class="navbar-inner">
+          <div class="container">      
+            <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <%= link_to "PivotalTracker Summary Reports", root_path, id: "logo", class: "brand" %>
+            <nav>
+              <div class="nav-collapse collapse pull-right">
+              <% if user_signed_in? %>                                                                                                                                
+                Signed in as <%= link_to current_user.email, edit_user_registration_path %>.                                                                                                       
+                <%= link_to "Sign out", destroy_user_session_path, method: :delete, class: 'btn-mini'%>
+              </div>
+              <% else %>                                                                                                                                                      
+                <ul class="nav pull-right">
+                  <li><%= link_to "Sign up", new_user_registration_path %></li>
+                  <li><%= link_to "Sign in", new_user_session_path %></li>
+                </ul>
+              <% end %>
+            </nav>
+          </div>
         </div>
       </div>
     </header>
     <div class="container">
-      <p class="notice"><%= notice %></p>
-      <p class="alert"><%= alert %></p>
-      <%= yield %>
-    </div>
+    <!-- Flash Messages -->
+    <% flash.each do |name, msg| %>
+      <% if msg.is_a?(String) %>
+      <div class="alert alert-<%= name == :notice ? "success" : "error" %>">
+        <a class="close" data-dismiss="alert">&#215;</a>
+        <%= content_tag :div, msg, :id => "flash_#{name}" %>
+      </div>
+      <% end %>
+    <% end %>
     
-    <footer class="footer">
-      <table class="pull-right" border=0 cellpadding=0 cellspacing=0 width=100% height=126 style="font: 11px arial,sans-serif; color: #393">   
-        <tr style="line-height: 15px">     
-          <td style="padding-left: 10px; border-top: 1px solid #B3E680" bgcolor="#B3E680" width=175>       
-            <b style="font-size: 14px">Hisham Malik</b><br>       
-          </td>     
-          <td style="padding-left: 20px; border-top: 1px solid #B3E680">              
-            <img src="http://www.linkedin.com/img/signature/icon_in_blue_14x14.gif" width=14 height=14 alt="" align=middle> <b><a target="nw" href="http://pk.linkedin.com/in/hishammalik">http://pk.linkedin.com/in/hishammalik</a></b><br>            
-          </td>     
-          <td style="padding: 0 10px; border-top: 1px solid #B3E680; border-right: 1px solid #B3E680;">       
-            <img src="http://www.techarete.com/templates/techarete/images/logo.jpg" alt=""><br><br>            
-          </td>   
-        </tr>   
-      </table>    
-    </footer>    
-
+      <%= yield %>
+    
+      <footer class="footer" role="contentinfo">
+          <div class="row">
+            <div class="span3">
+              <%= link_to raw('<img src="http://www.techarete.com/templates/techarete/images/logo.jpg" alt="TechAreteLog">'), 'http://www.techarete.com/'%>
+            </div>
+            <div class="span6">
+              <nav>
+                <ul>
+                  <li><%= link_to 'Git Repository', 'https://github.com/TechArete/pt_summary_reports'%></li>
+                  <li>
+                    <%= link_to raw('<img src="http://www.linkedin.com/img/signature/icon_in_blue_14x14.gif" width=14 height=14 alt="" align=middle />&nbsp;<b>http://pk.linkedin.com/in/hishammalik</b>'),
+                      'http://pk.linkedin.com/in/hishammalik'%>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </footer>    
+    </div>
   </body>
 </html>
