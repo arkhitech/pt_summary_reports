@@ -220,6 +220,6 @@ DEPENDENCIES
   rails (= 3.2.9)
   rspec-rails
   sass-rails (~> 3.2.3)
-  simple_form
+  simple_form (= 2.0.4)
   sqlite3
   uglifier (>= 1.0.3)

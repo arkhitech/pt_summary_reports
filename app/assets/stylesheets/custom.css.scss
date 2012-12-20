@@ -6,14 +6,14 @@ body { padding-top: 60px; }
     color: #FFFFFF;
 }
 
-fieldset {
-    border: 1px solid #eaeaea;
+header a:visited{
+    color: $gray;
+}
+
+fieldset, .bordered {
+    border: 1px solid $grayLight;
 }
 
 footer {
-    border-top: 1px solid #eaeaea;
-}
-
-.bordered {
-    border: 1px solid #eaeaea;
+    border-top: 1px solid $grayLight;
 }

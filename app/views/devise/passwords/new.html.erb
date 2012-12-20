@@ -1,3 +1,4 @@
+<% provide(:title, "Reset password: #{resource_name.to_s.humanize}") %>
 <%= render "devise/shared/tabs" %>
 <%= simple_form_for(resource, as: resource_name, 
   url: password_path(resource_name), html: { method: :post, class: 'form-inline' }) do |f| %>

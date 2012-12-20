@@ -1,6 +1,7 @@
+<% provide(:title, "Sign in") %>
 <%= render "devise/shared/tabs" %>
 <%= simple_form_for(resource, :as => resource_name, :url =>
-session_path(resource_name), :html => {:class => 'form-vertical' }) do
+session_path(resource_name), :html => {:class => 'form-inline' }) do
 |f| %>
   <%= f.error_notification %>
   <%= display_errors resource %>

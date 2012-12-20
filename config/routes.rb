@@ -1,4 +1,5 @@
 PtSummaryReports::Application.routes.draw do
+  
   authenticated :user do
     root :to => 'pt_accounts#index'
   end
@@ -14,4 +15,8 @@ PtSummaryReports::Application.routes.draw do
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
   root :to => 'home#index'
+
+  unless Rails.application.config.consider_all_requests_local
+    match '*not_found', to: 'errors#error_404'
+  end
 end
