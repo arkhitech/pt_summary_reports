@@ -6,7 +6,16 @@ body { padding-top: 60px; }
     color: #FFFFFF;
 }
 
-header a:visited{
+header {
+    a {
+        color: $gray;
+        &:visited {
+            color: $gray;
+        }
+    }
+}
+
+header a {
     color: $gray;
 }
 
