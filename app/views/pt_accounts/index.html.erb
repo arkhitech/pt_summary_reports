@@ -1,6 +1,5 @@
 <% provide(:title, 'Pivotal Tracker Accounts') %>
 <h1>PivotalTracker Accounts</h1>
-<%unless @pt_accounts.empty?%>
 <table class="table table-striped table-bordered table-hovered">
   <thead>
     <tr>
@@ -28,4 +27,3 @@
     <td><%= link_to 'Add Account', new_pt_account_path, class:'btn btn-primary' %></td>
   </tr>
 </table>
-<% end %>
