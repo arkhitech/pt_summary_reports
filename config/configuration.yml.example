@@ -10,8 +10,8 @@ default:
 
 development:
   host: localhost:3000
-  mailer_sender: hisham@techarete.com
+  mailer_sender: hisham@arkhitech.com
 
 production:
   host: ptsummaryreports.com
-  mailer_sender: hisham@techarete.com
+  mailer_sender: hisham@arkhitech.com
